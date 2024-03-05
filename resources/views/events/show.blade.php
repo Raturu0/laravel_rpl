@@ -71,7 +71,7 @@
                                 <div class="col-sm">
                                     <form action="{{ route('events.destroyComment', $comment->id) }}" method="POST">
                                         @csrf
-                                        @method('   ')
+                                        @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                     </form>
                                 </div>
