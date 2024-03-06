@@ -36,7 +36,7 @@ class EventController extends Controller
 
         ]);
         return redirect()->route('events.index')
-            ->with('successEvent', 'Event created successfully.');
+            ->with('successEvent', 'Sukses Buat Event Baru.');
     }
 
     // Menampilkan halaman utama
@@ -67,7 +67,7 @@ class EventController extends Controller
         $event->update($request->all());
 
         return redirect()->route('events.index')
-            ->with('success', 'Event updated successfully.');
+            ->with('successUpdateEvent', 'Sukses Update Event.');
     }
 
     // menghapus data event
@@ -76,7 +76,7 @@ class EventController extends Controller
         $event = Event::find($id);
 
         if (!$event) {
-            return redirect()->route('events.index')->with('error', 'Event not found.');
+            return redirect()->route('events.index')->with('failed', 'Event not found.');
         }
 
         // Hapus semua komentar terlebih dahulu
@@ -85,7 +85,7 @@ class EventController extends Controller
         // Setelah itu, baru hapus event
         $event->delete();
 
-        return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
+        return redirect()->route('events.index')->with('successDeleteEvent', 'Sukses Menghapus Event.');
     }
 
     // ----------------------------------------------

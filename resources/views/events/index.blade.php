@@ -13,17 +13,118 @@
 
 <body>
 
-    @if (session('successComment'))
-    <script>
-        // Tampilkan popup dengan pesan
-        if (<?= json_encode(session('successComment')) ?>) {
-            alert('Comment berhasil dibuat');
-        }
-    </script>
-    @endif
+    {{-- @if (session('successComment'))
+        <script>
+            // Tampilkan popup dengan pesan
+            if (<?= json_encode(session('successComment')) ?>) {
+                alert('Comment berhasil dibuat');
+            }
+        </script>
+    @endif --}}
+
+    {{-- @if (session('successEvent'))
+        <script>
+            // Tampilkan popup dengan pesan
+            if (<?= json_encode(session('successEvent')) ?>) {
+                alert('Event berhasil dibuat');
+            }
+        </script>
+    @endif --}}
 
     @if (session('successEvent'))
-        <p>Event berhasil dibuat</p>
+        <script>
+            // Mendapatkan pesan dari session
+            var successMessage = <?= json_encode(session('successEvent')) ?>;
+
+            // Mengecek apakah pesan tidak kosong
+            if (successMessage) {
+                // Membuat elemen div untuk popup
+                var popupDiv = document.createElement('div');
+                popupDiv.style.position = 'fixed';
+                popupDiv.style.top = '50%';
+                popupDiv.style.left = '50%';
+                popupDiv.style.transform = 'translate(-50%, -50%)';
+                popupDiv.style.padding = '20px';
+                popupDiv.style.backgroundColor = '#4CAF50'; // Warna hijau, bisa disesuaikan
+                popupDiv.style.color = 'white';
+                popupDiv.style.borderRadius = '8px';
+                popupDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+                popupDiv.style.zIndex = '9999';
+                popupDiv.textContent = successMessage;
+
+                // Menambahkan popup ke dalam body
+                document.body.appendChild(popupDiv);
+
+                // Menghilangkan popup setelah beberapa detik (misalnya 3 detik)
+                setTimeout(function() {
+                    popupDiv.remove();
+                }, 3000); // Waktu dalam milidetik, bisa disesuaikan
+            }
+        </script>
+    @endif
+
+    @if (session('successDeleteEvent'))
+        <script>
+            // Mendapatkan pesan dari session
+            var deleteMessage = <?= json_encode(session('successDeleteEvent')) ?>;
+
+            // Mengecek apakah pesan tidak kosong
+            if (deleteMessage) {
+                // Membuat elemen div untuk popup
+                var deletePopupDiv = document.createElement('div');
+                deletePopupDiv.style.position = 'fixed';
+                deletePopupDiv.style.top = '50%';
+                deletePopupDiv.style.left = '50%';
+                deletePopupDiv.style.transform = 'translate(-50%, -50%)';
+                deletePopupDiv.style.padding = '20px';
+                deletePopupDiv.style.backgroundColor = '#FF5733'; // Warna merah, bisa disesuaikan
+                deletePopupDiv.style.color = 'white';
+                deletePopupDiv.style.borderRadius = '8px';
+                deletePopupDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+                deletePopupDiv.style.zIndex = '9999';
+                deletePopupDiv.textContent = deleteMessage;
+
+                // Menambahkan popup ke dalam body
+                document.body.appendChild(deletePopupDiv);
+
+                // Menghilangkan popup setelah beberapa detik (misalnya 3 detik)
+                setTimeout(function() {
+                    deletePopupDiv.remove();
+                }, 3000); // Waktu dalam milidetik, bisa disesuaikan
+            }
+        </script>
+    @endif
+
+    @if (session('successUpdateEvent'))
+        <script>
+            // Mendapatkan pesan dari session
+            var successMessage = <?= json_encode(session('successUpdateEvent')) ?>;
+
+            // Mengecek apakah pesan tidak kosong
+            if (successMessage) {
+                // Membuat elemen div untuk popup
+                var popupDiv = document.createElement('div');
+                popupDiv.style.position = 'fixed';
+                popupDiv.style.top = '50%';
+                popupDiv.style.left = '50%';
+                popupDiv.style.transform = 'translate(-50%, -50%)';
+                popupDiv.style.padding = '20px';
+                popupDiv.style.backgroundColor = '#4CAF50'; // Warna hijau, bisa disesuaikan
+                popupDiv.style.color = 'white';
+                popupDiv.style.borderRadius = '8px';
+                popupDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+                popupDiv.style.zIndex = '9999';
+                popupDiv.textContent = successMessage;
+
+                // Menambahkan popup ke dalam body
+                document.body.appendChild(popupDiv);
+
+                // Menghilangkan popup setelah beberapa detik (misalnya 3 detik)
+                setTimeout(function() {
+                    popupDiv.remove();
+                }, 3000); // Waktu dalam milidetik, bisa disesuaikan
+            }
+        </script>
     @endif
 
     <nav class="navbar navbar-expand-lg navbar-light bg-warning">
