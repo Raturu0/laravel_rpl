@@ -4,9 +4,40 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EventController extends Controller
 {
+
+    // Menampilkan halaman untuk buat event
+    public function create()
+    {
+        return view('events.create');
+    }
+
+    // Menyimpan data baru event
+    public function store(Request $request)
+    {
+
+        // berada di folder storage -> log -> untuk debugging
+        Log::info($request->all());
+
+        $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
+        ]);
+
+        // $event = new Event();
+
+        // ini bisa langsung all, detailnya kek gini
+        Event::create([
+            'title' => $request->title,
+            'body' => $request->body,
+
+        ]);
+        return redirect()->route('events.index')
+            ->with('successEvent', 'Event created successfully.');
+    }
 
     // Menampilkan halaman utama
     public function index()
@@ -17,16 +48,11 @@ class EventController extends Controller
         ]);
     }
 
-    // Menyimpan data baru event
-    public function store(Request $request)
+    // Menampilkan halaman untuk mengedit event
+    public function edit($id)
     {
-        $request->validate([
-            'title' => 'required|max:255',
-            'body' => 'required',
-        ]);
-        Event::create($request->all());
-        return redirect()->route('events.index')
-            ->with('success', 'Event created successfully.');
+        $event = Event::find($id);
+        return view('events.edit', compact('event'));
     }
 
     // mengupdate data event
@@ -47,45 +73,24 @@ class EventController extends Controller
     // menghapus data event
     public function destroy($id)
     {
-        $Event = Event::find($id);
-        $Event->delete();
-        return redirect()->route('events.index')
-            ->with('success', 'Event deleted successfully');
-    }
-
-    // Menampilkan halaman untuk buat event
-    public function create()
-    {
-        return view('events.create');
-    }
-
-    // Menampilkan comment pada suatu event
-    public function show($id)
-    {
-        $event = Event::with('comments')->find($id);
-        return view('events.show', compact('event'));
-    }
-
-    // Menampilkan halaman untuk mengedit event
-    public function edit($id)
-    {
         $event = Event::find($id);
-        return view('events.edit', compact('event'));
-    }
 
-    // Menghapus comment
-    public function destroyComment($id)
-    {
-        $comment = Comment::find($id);
-
-        if (!$comment) {
-            return redirect()->route('events.index')->with('error', 'Komentar tidak ditemukan.');
+        if (!$event) {
+            return redirect()->route('events.index')->with('error', 'Event not found.');
         }
 
-        $comment->delete();
+        // Hapus semua komentar terlebih dahulu
+        $event->comments()->delete();
 
-        return redirect()->route('events.index')->with('success', 'Komentar berhasil dihapus.');
+        // Setelah itu, baru hapus event
+        $event->delete();
+
+        return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
     }
+
+    // ----------------------------------------------
+    // ---------COMMENT-----------------------------
+    // ----------------------------------------------
 
     // Menampilkan halaman untuk membuat comment
     public function createComment($eventId)
@@ -96,6 +101,32 @@ class EventController extends Controller
         ]);
     }
 
+    // Menyimpan data comment
+    public function storeComment(Request $request, $eventId)
+    {
+        Comment::create($request->all());
+        return redirect()->route('events.index')
+            ->with('successComment', 'Comment created successfully.');
+    }
+
+    // Menampilkan comment pada suatu event
+    public function show($id)
+    {
+        $event = Event::with('comments')->find($id);
+        // melempar event yang kesimpan ke show.blade, dengan begitu di show bisa makai event untuk memanggil2
+        return view('events.show', compact('event'));
+    }
+
+    // masuk ke halaman edit comment
+    public function editComment($commentId)
+    {
+        $comment = Comment::find($commentId);
+        if (!$comment) {
+            return redirect()->route('events.index')->with('error', 'Komentar tidak ditemukan.');
+        }
+        return view('events.editComment', compact('comment'));
+    }
+
     // Mengupdate comment
     public function updateComment(Request $request, $id)
     {
@@ -103,38 +134,27 @@ class EventController extends Controller
             'title' => 'required|max:255',
             'body' => 'required',
         ]);
-
         $comment = Comment::find($id);
-
         if (!$comment) {
-            return redirect()->route('events.index')->with('error', 'Komentar tidak ditemukan.');
+            return redirect()->route('events.index')
+                ->with('error', 'Komentar tidak ditemukan.');
         }
-
         // Periksa apakah komentar ditemukan sebelum memanggil metode update
         $comment->update($request->all());
-
         return redirect()->route('events.index')->with('success', 'Komentar berhasil diperbarui.');
     }
 
-    // masuk ke halaman edit comment
-    public function editComment($commentId)
+    // Menghapus comment
+    public function destroyComment($id)
     {
-        $comment = Comment::find($commentId);
-
+        $comment = Comment::find($id);
         if (!$comment) {
-            return redirect()->route('events.index')->with('error', 'Komentar tidak ditemukan.');
+            return redirect()->route('events.index')
+                ->with('error', 'Komentar tidak ditemukan.');
         }
-
-        return view('events.editComment', compact('comment'));
-    }
-
-    // Menyimpan data comment
-    public function storeComment(Request $request, $eventId)
-    {
-
-        Comment::create($request->all());
+        $comment->delete();
         return redirect()->route('events.index')
-            ->with('success', 'Event created successfully.');
+            ->with('success', 'Komentar berhasil dihapus.');
     }
 
 }

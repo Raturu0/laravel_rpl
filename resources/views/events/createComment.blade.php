@@ -1,22 +1,26 @@
 {{-- Create Comment --}}
-<div class="container h-100 mt-5">
-    <div class="row h-100 justify-content-center align-items-center">
-        <div class="col-10 col-md-8 col-lg-6">
-            <h3>Add a Comment</h3>
-            <form action="{{ route('events.storeComment', ['event' => $event->id]) }}" method="POST">
-                @csrf
-                <input type="hidden" name="event_id" value="{{ $event->id }}">
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" name="title" required>
-                </div>
-                <div class="form-group">
-                    <label for="body">Body</label>
-                    <textarea class="form-control" id="body" name="body" rows="3" required></textarea>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary">Create Comment</button>
-            </form>
+
+@extends('layouts.app')
+@section('content')
+    <div class="container h-100 mt-5">
+        <div class="row h-100 justify-content-center align-items-center">
+            <div class="col-10 col-md-8 col-lg-6">
+                <h3>Add a Comment</h3>
+                <form action="{{ route('events.storeComment', ['event' => $event->id]) }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="event_id" value="{{ $event->id }}">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="body">Body</label>
+                        <textarea class="form-control" id="body" name="body" rows="3" required></textarea>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Create Comment</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+@endsection

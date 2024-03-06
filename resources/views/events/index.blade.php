@@ -12,6 +12,20 @@
 </head>
 
 <body>
+
+    @if (session('successComment'))
+    <script>
+        // Tampilkan popup dengan pesan
+        if (<?= json_encode(session('successComment')) ?>) {
+            alert('Comment berhasil dibuat');
+        }
+    </script>
+    @endif
+
+    @if (session('successEvent'))
+        <p>Event berhasil dibuat</p>
+    @endif
+
     <nav class="navbar navbar-expand-lg navbar-light bg-warning">
         <div class="container-fluid">
             <a class="navbar-brand h1" href={{ route('events.index') }}>CRUDEvents</a>

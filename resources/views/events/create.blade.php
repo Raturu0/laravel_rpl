@@ -1,6 +1,8 @@
 {{-- CREATE EVENTS --}}
-<div class="container h-100 mt-5">
-    <div class="row h-100 justify-content-center align-items-center">
+@extends('layouts.app')
+
+@section('content')
+    <div class="row h-100 justify-content-center align-items-cener">
         <div class="col-10 col-md-8 col-lg-6">
             <h3>Add a Event</h3>
             <form action="{{ route('events.store') }}" method="POST">
@@ -18,4 +20,5 @@
             </form>
         </div>
     </div>
-</div>
+    </div>
+@endsection
