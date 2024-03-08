@@ -29,6 +29,9 @@ class EventController extends Controller
 
         // $event = new Event();
 
+        // Event::create($request->all());
+        
+        
         // ini bisa langsung all, detailnya kek gini
         Event::create([
             'title' => $request->title,

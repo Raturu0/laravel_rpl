@@ -41,21 +41,20 @@
                 // Membuat elemen div untuk popup
                 var popupDiv = document.createElement('div');
                 popupDiv.style.position = 'fixed';
-                popupDiv.style.top = '50%';
+                popupDiv.style.top = '5%';
                 popupDiv.style.left = '50%';
                 popupDiv.style.transform = 'translate(-50%, -50%)';
                 popupDiv.style.padding = '20px';
-                popupDiv.style.backgroundColor = '#4CAF50'; // Warna hijau, bisa disesuaikan
+                popupDiv.style.backgroundColor = '#4CAF50';
                 popupDiv.style.color = 'white';
                 popupDiv.style.borderRadius = '8px';
-                popupDiv.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
                 popupDiv.style.zIndex = '9999';
                 popupDiv.textContent = successMessage;
 
                 // Menambahkan popup ke dalam body
                 document.body.appendChild(popupDiv);
 
-                // Menghilangkan popup setelah beberapa detik (misalnya 3 detik)
+                // Menghilangkan popup setelah beberapa detik 
                 setTimeout(function() {
                     popupDiv.remove();
                 }, 3000); // Waktu dalam milidetik, bisa disesuaikan
@@ -73,7 +72,7 @@
                 // Membuat elemen div untuk popup
                 var deletePopupDiv = document.createElement('div');
                 deletePopupDiv.style.position = 'fixed';
-                deletePopupDiv.style.top = '50%';
+                deletePopupDiv.style.top = '5%';
                 deletePopupDiv.style.left = '50%';
                 deletePopupDiv.style.transform = 'translate(-50%, -50%)';
                 deletePopupDiv.style.padding = '20px';
@@ -105,7 +104,7 @@
                 // Membuat elemen div untuk popup
                 var popupDiv = document.createElement('div');
                 popupDiv.style.position = 'fixed';
-                popupDiv.style.top = '50%';
+                popupDiv.style.top = '5%';
                 popupDiv.style.left = '50%';
                 popupDiv.style.transform = 'translate(-50%, -50%)';
                 popupDiv.style.padding = '20px';
@@ -129,7 +128,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-warning">
         <div class="container-fluid">
-            <a class="navbar-brand h1" href={{ route('events.index') }}>CRUDEvents</a>
+            <h3>CRUD - Events</h3>
             <div class="justify-end ">
                 <div class="col ">
                     <a class="btn btn-sm btn-success" href={{ route('events.create') }}>Add Event</a>
